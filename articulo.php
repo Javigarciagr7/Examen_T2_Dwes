@@ -34,9 +34,13 @@ class Articulo {
         return $this->contador;
     }
 
-    public function Mostrar() 
+    public function MostrarNombre() 
     {
         echo "{$this->nombre}";
+    }
+    public function MostrarVendidos() 
+    {
+        echo "{$this->contador}";
     }
 }
 ?>

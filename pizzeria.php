@@ -25,12 +25,15 @@ mostrarMenu($articulos);
 echo "<br>";
 
 echo "<h2>Lo más vendido</h2>";
+mostrarMasVendidos($articulos);
+echo "<br>";
 
 echo "<h2>¿Los más lucrativos!</h2>";
-
-mostrarMasVendidos($articulos);
 mostrarMasLucrativos($articulos);
+echo "<br>";
 
+
+//Funciones
 function mostrarMenu($articulos) {
 
     $tipos = [
@@ -54,7 +57,7 @@ function mostrarMenu($articulos) {
         if (!empty($items)) {
             echo "<h2>$tipo</h2>";
             foreach ($items as $item) {
-                $item->Mostrar();
+                $item->MostrarNombre();
                 echo "<br>";
             }
         }
@@ -62,7 +65,16 @@ function mostrarMenu($articulos) {
 }
 
 function mostrarMasVendidos($articulos) {
+    usort($articulos, function ($a, $b) {
+  
+        return $b->getContador() - $a->getContador();
+    });
 
+    $masVendidos = array_slice($articulos, 0, 3);
+
+    foreach ($masVendidos as $articulo) {
+        echo "{$articulo->MostrarNombre()} - Vendidos: {$articulo->getContador()}<br>";
+    }
 }
 
 function mostrarMasLucrativos($articulos) {
