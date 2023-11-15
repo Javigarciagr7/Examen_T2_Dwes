@@ -1,6 +1,10 @@
 <?php
 
 // solicitar los archivos "articulo.php", "bebida.php", "pizza.php";
+include 'Articulo.php';
+include 'bebida.php';
+include 'Pizza.php';
+
 
 // Inicialización de los artículos
 $articulos = [
@@ -14,15 +18,47 @@ $articulos = [
     new Bebida("Cerveza", 1.50, 3.00, 40, true)
 ];
 
+
 // Ejemplo de uso
-
-
+echo "<h1>Nuestro Menú</h1>";
 mostrarMenu($articulos);
+echo "<br>";
+
+echo "<h2>Lo más vendido</h2>";
+
+echo "<h2>¿Los más lucrativos!</h2>";
+
 mostrarMasVendidos($articulos);
 mostrarMasLucrativos($articulos);
 
 function mostrarMenu($articulos) {
 
+    $tipos = [
+        'Pizza' => [],
+        'Bebida' => [],
+        'Otros' => []
+    ];
+
+    foreach ($articulos as $articulo) {
+        if ($articulo instanceof Pizza) {
+            $tipos['Pizza'][] = $articulo;
+        } elseif ($articulo instanceof Bebida) {
+            $tipos['Bebida'][] = $articulo;
+        } else {
+            $tipos['Otros'][] = $articulo;
+        }
+    }
+
+
+    foreach ($tipos as $tipo => $items) {
+        if (!empty($items)) {
+            echo "<h2>$tipo</h2>";
+            foreach ($items as $item) {
+                $item->Mostrar();
+                echo "<br>";
+            }
+        }
+    }
 }
 
 function mostrarMasVendidos($articulos) {
