@@ -1,4 +1,5 @@
 <?php
+// https://github.com/Javigarciagr7/Examen_T2_Dwes.git
 
 // solicitar los archivos "articulo.php", "bebida.php", "pizza.php";
 include 'Articulo.php';
@@ -66,7 +67,6 @@ function mostrarMenu($articulos) {
 
 function mostrarMasVendidos($articulos) {
     usort($articulos, function ($a, $b) {
-  
         return $b->getContador() - $a->getContador();
     });
 
@@ -79,5 +79,19 @@ function mostrarMasVendidos($articulos) {
 
 function mostrarMasLucrativos($articulos) {
 
+    $beneficios = [];
+    foreach ($articulos as $articulo) {
+        $beneficio = ($articulo->getPrecio() - $articulo->getCosto()) * $articulo->getContador();
+        $beneficios[] = ['articulo' => $articulo, 'beneficio' => $beneficio];
+    }
+
+    usort($beneficios, function($a, $b) {
+       return $b['beneficio'] - $a['beneficio'];
+    });
+    
+
+    foreach ($beneficios as $beneficio) {
+        echo "{$beneficio['articulo']->MostrarNombre()} - Beneficio: {$beneficio['beneficio']}€<br>";
+    }
 }
 
